@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const navLinks = [
-     { name: "Home", href: "/" },
-  { name: "About", href: "#about" },
-  { name: "The Vessel", href: "#vessel" },
-  { name: "Our Vision", href: "#about" },
- 
-
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/#about" },
+  { name: "The Vessel", href: "/#specifications" },
+  { name: "Destinations", href: "/destinations" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Our Vision", href: "/#vision" },
+  { name: "Careers", href: "/careers" },
 ];
 
 export default function Navbar() {
@@ -28,7 +29,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 z-50 w-full">
       {/* Background */}
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-md border-b border-white/5" />
+      <div className="absolute inset-0 bg-[#071923]/70 backdrop-blur-md border-b border-white/5" />
 
       <nav className="relative mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-6 md:py-5">
         {/* Logo */}
@@ -47,7 +48,7 @@ export default function Navbar() {
             <li key={link.name}>
               <Link
                 href={link.href}
-                className="relative text-[11px] font-medium uppercase tracking-[0.22em] text-white/70 transition-colors duration-300 hover:text-[#b99a63]"
+                className="relative text-[10px] font-medium uppercase tracking-[0.22em] text-white/70 transition-colors duration-300 hover:text-[#b99a63]"
               >
                 {link.name}
                 <span className="absolute -bottom-1 left-0 h-px w-0 bg-[#b99a63] transition-all duration-300 group-hover:w-full hover:w-full" />
@@ -59,7 +60,7 @@ export default function Navbar() {
         {/* Desktop Contact – only from lg and up */}
         <div className="hidden lg:block">
           <Link
-            href="#contact"
+            href="/#contact"
             className="inline-flex items-center border border-[#b99a63]/40 bg-[#b99a63]/10 px-5 py-2 text-[11px] font-medium uppercase tracking-[0.18em] text-[#b99a63] transition-all duration-300 hover:border-[#b99a63] hover:bg-[#b99a63]/20"
           >
             Contact
@@ -93,7 +94,7 @@ export default function Navbar() {
 
       {/* Full-screen menu – mobile + tablet */}
       <div
-        className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl transition-all duration-500 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-[#071923]/70 backdrop-blur-xl transition-all duration-500 lg:hidden ${
           isOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
@@ -132,7 +133,7 @@ export default function Navbar() {
           <div className="mt-6 h-px w-14 bg-[#b99a63]/30" />
 
           <Link
-            href="#contact"
+            href="/#contact"
             onClick={closeMenu}
             className="mt-2 border border-[#b99a63]/50 bg-[#b99a63]/10 px-9 py-3 text-xs font-medium uppercase tracking-[0.22em] text-[#b99a63] transition-all duration-300 hover:bg-[#b99a63]/20"
           >

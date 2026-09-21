@@ -1,18 +1,20 @@
 import Link from "next/link";
 
 const navLinks = [
-      { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "The Vessel", href: "#vessel" },
-  { name: "Our Vision", href: "#about" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", href: "/" },
+  { name: "About Us", href: "/#about" },
+  { name: "The Vessel", href: "/#specifications" },
+  { name: "Destinations", href: "/destinations" },
+  { name: "Gallery", href: "/gallery" },
+  { name: "Our Vision", href: "/#vision" },
+  { name: "Careers", href: "/careers" },
 ];
 
 export default function Footer() {
   return (
     <footer className="relative w-full overflow-hidden bg-black border-t border-white/5">
       {/* Subtle background accents */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-black/95" />
+      <div className="absolute inset-0 bg-[#071923]" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-[#b99a63]/8 via-transparent to-transparent" />
 
       <div className="relative z-10 mx-auto max-w-7xl px-6 py-16 md:py-20">
@@ -71,7 +73,7 @@ export default function Footer() {
                 Public Investment
               </p>
               <Link
-                href="#contact"
+                href="/#contact"
                 className="inline-flex items-center border border-[#b99a63]/40 bg-[#b99a63]/10 px-6 py-2.5 text-xs font-medium uppercase tracking-[0.2em] text-[#b99a63] transition-all duration-300 hover:border-[#b99a63] hover:bg-[#b99a63]/20"
               >
                 Contact Us

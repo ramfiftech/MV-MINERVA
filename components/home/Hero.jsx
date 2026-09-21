@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section
-      className="relative h-screen min-h-[700px] pt-5 w-full overflow-hidden bg-black"
+      className="relative h-screen min-h-[700px] pt-5 w-full overflow-hidden bg-[#071923]"
       id="home"
     >
       {/* Background Image */}
