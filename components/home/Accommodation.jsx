@@ -6,7 +6,7 @@ const accommodationData = {
   title: "A place to slow down.",
   description:
     "Thoughtfully designed accommodation combining comfort, privacy and the character of life at sea.",
-  image: "/images/Accommodation.JPG",
+  image: "/images/Accommodation.jpg",
 
   features: [
     {
