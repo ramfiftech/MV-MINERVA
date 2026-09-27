@@ -9,6 +9,8 @@ import RestautantsLounges from "@/components/home/RestaurantsLounges";
 import Specifications from "@/components/home/Specifications";
 import VesselHighlights from "@/components/home/VesselHighlights";
 import JourneyNote from "@/components/home/JourneyNote";
+import ScrollToTop from "@/components/common/ScrollToTop";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
 
 export default function Home() {
   return (
@@ -23,6 +25,8 @@ export default function Home() {
       <VesselHighlights />
       <ContactCTA />
       <Footer />
+      <WhatsAppButton />
+      <ScrollToTop />
     
     </main>
   );

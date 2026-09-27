@@ -4,42 +4,90 @@ import {
   Wine,
   Coffee,
   Music,
+  BookOpen,
+  Users,
+  Globe2,
 } from "lucide-react";
 
 const restaurantsData = {
   eyebrow: "Restaurants & Lounges",
 
-  title: "Taste the journey.",
+  title: "Spaces to gather, dine and unwind.",
 
   description:
-    "A collection of dining and social spaces envisioned to bring together exceptional food, conversation and memorable moments at sea.",
+    "Minerva offers a collection of spacious restaurants, lounges and social areas designed around every mood — from quiet moments with a book and afternoon tea to lively evenings with friends, music and freshly prepared cuisine.",
 
   image: "/images/minerva-gallery9.jpg",
 
-  spaces: [
+  restaurants: [
     {
       icon: UtensilsCrossed,
-      title: "Restaurant",
+      title: "Verandah Buffet Restaurant",
+      deck: "Bridge Deck 7",
+      capacity: "Approximately 180 guests",
       description:
-        "A refined dining environment designed for relaxed meals and memorable evenings.",
+        "A spacious buffet restaurant extending across interior and exterior areas, offering a relaxed setting for meals throughout the journey.",
     },
     {
-      icon: Wine,
-      title: "Lounge",
+      icon: UtensilsCrossed,
+      title: "Swan Restaurant",
+      deck: "Main Deck 6",
+      capacity: "Approximately 210 guests",
       description:
-        "An elegant space to unwind, meet and enjoy the journey.",
+        "A welcoming dining venue where freshly prepared meals are served by a team of renowned chefs.",
+    },
+  ],
+
+  lounges: [
+    {
+      icon: Users,
+      title: "Orpheus Lounge",
+      deck: "Promenade Deck 9",
+      capacity: "Up to 145 guests",
+      description:
+        "A spacious lounge with panoramic views, leading directly onto an open deck for an unforgettable experience at sea.",
+    },
+    {
+      icon: Globe2,
+      title: "Internet Lounge",
+      deck: "Bridge Deck 7",
+      description:
+        "A dedicated space for staying connected while travelling.",
     },
     {
       icon: Coffee,
-      title: "Café",
+      title: "Livingstone Lounge",
+      deck: "Bridge Deck 7",
       description:
-        "A relaxed setting for coffee, refreshments and casual moments.",
+        "A comfortable social space for meeting friends, relaxing and enjoying the atmosphere on board.",
+    },
+    {
+      icon: BookOpen,
+      title: "Library / Card Room",
+      deck: "Bridge Deck 7",
+      description:
+        "A quieter retreat for reading, puzzles, board games and relaxed moments away from the main social areas.",
+    },
+    {
+      icon: Wine,
+      title: "Wheeler Bar",
+      deck: "Bridge Deck 7",
+      description:
+        "A refined setting for drinks, conversation and relaxed evenings.",
+    },
+    {
+      icon: Wine,
+      title: "Shackleton Bar",
+      deck: "Main Deck 6",
+      description:
+        "A welcoming bar space designed for socialising and unwinding during the voyage.",
     },
     {
       icon: Music,
-      title: "Entertainment",
+      title: "Darwin Lounge",
+      deck: "Main Deck 6",
       description:
-        "Spaces designed for social experiences, entertainment and evening gatherings.",
+        "A relaxed lounge where guests can meet, listen to music and enjoy time together.",
     },
   ],
 };
@@ -51,6 +99,7 @@ export default function RestaurantsLounges() {
       className="bg-[#071923] px-6 py-24 text-white md:py-32"
     >
       <div className="mx-auto max-w-7xl">
+        {/* Intro */}
         <div className="grid gap-14 lg:grid-cols-2 lg:items-center">
           {/* Content */}
           <div className="lg:order-1">
@@ -70,24 +119,34 @@ export default function RestaurantsLounges() {
               {restaurantsData.description}
             </p>
 
-            <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2">
-              {restaurantsData.spaces.map((space) => {
-                const Icon = space.icon;
+            {/* Dining highlights */}
+            <div className="mt-12 grid gap-8 sm:grid-cols-2">
+              {restaurantsData.restaurants.map((restaurant) => {
+                const Icon = restaurant.icon;
 
                 return (
-                  <div key={space.title}>
+                  <div
+                    key={restaurant.title}
+                    className="border-t border-white/10 pt-6"
+                  >
                     <Icon
-                      size={28}
+                      size={26}
                       strokeWidth={1.2}
                       className="mb-5 text-[#b99a63]"
                     />
 
-                    <h3 className="text-xl">
-                      {space.title}
-                    </h3>
+                    <h3 className="text-xl">{restaurant.title}</h3>
 
-                    <p className="mt-2 text-sm leading-6 text-white/45">
-                      {space.description}
+                    <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-[10px] uppercase tracking-[0.18em] text-[#b99a63]">
+                      <span>{restaurant.deck}</span>
+
+                      {restaurant.capacity && (
+                        <span>{restaurant.capacity}</span>
+                      )}
+                    </div>
+
+                    <p className="mt-4 text-sm leading-6 text-white/45">
+                      {restaurant.description}
                     </p>
                   </div>
                 );
@@ -99,11 +158,95 @@ export default function RestaurantsLounges() {
           <div className="relative aspect-[4/5] overflow-hidden lg:order-2">
             <Image
               src={restaurantsData.image}
-              alt="Restaurants and lounges"
+              alt="Restaurants and lounges aboard Minerva"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover transition duration-700 hover:scale-105"
             />
+          </div>
+        </div>
+
+        {/* Lounges & Social Spaces */}
+        <div className="mt-32">
+          <div className="mb-12">
+            <div className="mb-5 flex items-center gap-4">
+              <span className="h-px w-10 bg-[#b99a63]" />
+
+              <p className="text-xs uppercase tracking-[0.4em] text-[#b99a63]">
+                Lounges & Social Spaces
+              </p>
+            </div>
+
+            <h2 className="max-w-3xl text-4xl leading-tight md:text-5xl">
+              Find your own way to spend the day.
+            </h2>
+
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/50">
+              From panoramic lounges and bars to quiet corners for reading,
+              playing games or simply listening to music, Minerva offers
+              spaces to suit every mood.
+            </p>
+          </div>
+
+          <div className="grid gap-px bg-white/10 sm:grid-cols-2 lg:grid-cols-3">
+            {restaurantsData.lounges.map((space) => {
+              const Icon = space.icon;
+
+              return (
+                <div
+                  key={space.title}
+                  className="bg-[#071923] p-8 transition duration-300 hover:bg-white/[0.03] md:p-10"
+                >
+                  <Icon
+                    size={26}
+                    strokeWidth={1.2}
+                    className="mb-6 text-[#b99a63]"
+                  />
+
+                  <h3 className="text-xl">{space.title}</h3>
+
+                  <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-[#b99a63]">
+                    {space.deck}
+                  </p>
+
+                  {space.capacity && (
+                    <p className="mt-1 text-xs text-white/35">
+                      {space.capacity}
+                    </p>
+                  )}
+
+                  <p className="mt-5 text-sm leading-6 text-white/45">
+                    {space.description}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Dining Statement */}
+        <div className="mt-24 border-y border-[#b99a63]/30 py-10">
+          <div className="grid gap-8 md:grid-cols-3">
+            <div>
+              <p className="text-3xl text-white">2</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.25em] text-[#b99a63]">
+                Restaurants
+              </p>
+            </div>
+
+            <div>
+              <p className="text-3xl text-white">7</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.25em] text-[#b99a63]">
+                Lounges & Social Spaces
+              </p>
+            </div>
+
+            <div>
+              <p className="text-3xl text-white">145</p>
+              <p className="mt-1 text-xs uppercase tracking-[0.25em] text-[#b99a63]">
+                Orpheus Lounge Capacity
+              </p>
+            </div>
           </div>
         </div>
       </div>

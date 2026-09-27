@@ -27,9 +27,9 @@ const routes = [
 ];
 
 const facts = [
-  { value: "1990", label: "Built" },
+  { value: "1996", label: "Built" },
   { value: "12,500", label: "Gross tonnage" },
-  { value: "400+", label: "Guest capacity" },
+  { value: "300+", label: "Guest capacity" },
 ];
 
 /* The line draws itself and the ship sails along it each time a route is picked */
@@ -281,7 +281,7 @@ export default function Hero() {
                   tabIndex={i === active ? 0 : -1}
                   onClick={() => setActive(i)}
                   onKeyDown={onTabKeyDown}
-                  className={`min-h-[48px] px-2 py-3.5 text-sm transition-colors duration-300 active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#b99a63] ${
+                  className={`min-h-[48px] cursor-pointer px-2 py-3.5 text-sm transition-colors duration-300 active:scale-[0.97] focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#b99a63] ${
                     i === active
                       ? "text-white"
                       : "text-white/50 hover:text-white/85"
@@ -337,18 +337,7 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll button (desktop) */}
-      <a
-        href="#about"
-        aria-label="Scroll to the next section"
-        className="group absolute bottom-14 right-6 z-10 hidden h-12 w-12 items-center justify-center border border-white/30 text-white transition duration-300 hover:border-[#b99a63] hover:text-[#b99a63] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b99a63] xl:flex"
-      >
-        <ArrowDown
-          size={18}
-          strokeWidth={1.4}
-          className="transition-transform duration-300 group-hover:translate-y-1"
-        />
-      </a>
+    
     </section>
   );
 }
