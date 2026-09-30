@@ -196,7 +196,7 @@ export default function Specifications() {
                   {item.label}
                 </p>
 
-                <p className="mt-2 text-xl font-light leading-8 tracking-wide text-white md:text-2xl">
+                <p className="mt-2 text-xl font-semibold leading-8 tracking-wide text-white md:text-2xl">
                   {item.value}
                 </p>
               </div>
@@ -346,49 +346,7 @@ export default function Specifications() {
         {/* Key Figures */}
         {/* ============================= */}
 
-        <div className="mt-28 border-y border-[#b99a63]/30 py-10">
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
-              <p className="text-3xl font-light text-white md:text-4xl">
-                135.10 m
-              </p>
-
-              <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-[#b99a63]">
-                Length Overall
-              </p>
-            </div>
-
-            <div>
-              <p className="text-3xl font-light text-white md:text-4xl">
-                20 m
-              </p>
-
-              <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-[#b99a63]">
-                Beam
-              </p>
-            </div>
-
-            <div>
-              <p className="text-3xl font-light text-white md:text-4xl">
-                14 Knots
-              </p>
-
-              <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-[#b99a63]">
-                Cruising Speed
-              </p>
-            </div>
-
-            <div>
-              <p className="text-3xl font-light text-white md:text-4xl">
-                6,920 kW
-              </p>
-
-              <p className="mt-2 text-[10px] uppercase tracking-[0.25em] text-[#b99a63]">
-                Total Engine Power
-              </p>
-            </div>
-          </div>
-        </div>
+      
 
         {/* Note */}
         <p className="mt-8 max-w-3xl text-xs leading-6 text-white/35">

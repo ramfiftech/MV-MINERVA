@@ -1,3 +1,7 @@
+
+"use client";
+
+import { useState } from "react";
 import {
   Mail,
   Phone,
@@ -43,6 +47,41 @@ const interestOptions = [
 ];
 
 export default function ContactCTA() {
+  const [status, setStatus] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setIsSubmitting(true);
+    setStatus("");
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mqpayrao", {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section
       id="contact"
@@ -54,15 +93,13 @@ export default function ContactCTA() {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#b99a63]/5 via-transparent to-transparent" />
 
       {/* Decorative Icon */}
-      <div className="pointer-events-none absolute right-10 top-20  text-[#b99a63]/10 ">
+      <div className="pointer-events-none absolute right-10 top-20 text-[#b99a63]/10">
         <Ship size={180} strokeWidth={0.6} />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 mx-auto max-w-6xl px-6">
         {/* Heading */}
         <div className="mx-auto max-w-3xl text-center">
-          {/* Eyebrow */}
           <div className="mb-8 flex items-center justify-center gap-4 opacity-0 animate-fade-up [animation-delay:0.1s]">
             <span className="h-px w-10 bg-[#b99a63]/60" />
 
@@ -73,12 +110,10 @@ export default function ContactCTA() {
             <span className="h-px w-10 bg-[#b99a63]/60" />
           </div>
 
-          {/* Heading */}
           <h2 className="mb-6 text-4xl font-light tracking-tight text-[#071923] opacity-0 animate-fade-up [animation-delay:0.25s] md:text-5xl lg:text-6xl">
             Be Part of the Journey
           </h2>
 
-          {/* Description */}
           <p className="mx-auto max-w-2xl text-base font-light leading-8 text-[#071923]/70 opacity-0 animate-fade-up [animation-delay:0.4s] md:text-lg">
             Whether you are interested in our cruise vision, tourism
             partnerships, investment opportunities, or future experiences
@@ -139,9 +174,18 @@ export default function ContactCTA() {
                     Phone
                   </p>
 
-                  <p className="text-sm text-[#071923]/70">
-                    Contact our investment office
-                  </p>
+                
+                <a
+                href="tel:+917907703425"
+                className="text-sm text-[#071923] transition-colors hover:text-[#b99a63]"
+              >
+                +91 7907 703 425
+              </a>
+          
+             
+
+
+
                 </div>
               </div>
 
@@ -176,7 +220,7 @@ export default function ContactCTA() {
 
           {/* Right - Contact Form */}
           <div className="border border-[#071923]/10 bg-white/40 p-6 backdrop-blur-sm opacity-0 animate-fade-up [animation-delay:0.6s] md:p-10">
-            <form className="space-y-7">
+            <form onSubmit={handleSubmit} className="space-y-7">
               {/* Name + Email */}
               <div className="grid gap-7 md:grid-cols-2">
                 {/* Name */}
@@ -286,21 +330,40 @@ export default function ContactCTA() {
                 />
               </div>
 
+              {/* Success Message */}
+              {status === "success" && (
+                <div className="border border-green-600/20 bg-green-50 px-4 py-3 text-sm text-green-700">
+                  Thank you. Your enquiry has been submitted successfully.
+                  We will get back to you shortly.
+                </div>
+              )}
+
+              {/* Error Message */}
+              {status === "error" && (
+                <div className="border border-red-600/20 bg-red-50 px-4 py-3 text-sm text-red-700">
+                  Something went wrong while submitting your enquiry.
+                  Please try again.
+                </div>
+              )}
+
               {/* Submit */}
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden border border-[#b99a63]/50 bg-[#b99a63]/10 px-10 py-4 text-sm font-medium uppercase tracking-[0.25em] text-[#b99a63] transition-all duration-500 hover:border-[#b99a63] hover:bg-[#b99a63] hover:text-white"
+                  disabled={isSubmitting}
+                  className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden border border-[#b99a63]/50 bg-[#b99a63]/10 px-10 py-4 text-sm font-medium uppercase tracking-[0.25em] text-[#b99a63] transition-all duration-500 hover:border-[#b99a63] hover:bg-[#b99a63] hover:text-white disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <span className="relative z-10">
-                    Send Enquiry
+                    {isSubmitting ? "Sending..." : "Send Enquiry"}
                   </span>
 
-                  <Send
-                    size={16}
-                    strokeWidth={1.5}
-                    className="relative z-10 transition-transform duration-300 group-hover:translate-x-1"
-                  />
+                  {!isSubmitting && (
+                    <Send
+                      size={16}
+                      strokeWidth={1.5}
+                      className="relative z-10 transition-transform duration-300 group-hover:translate-x-1"
+                    />
+                  )}
 
                   <span className="absolute inset-0 -translate-x-full bg-white/10 transition-transform duration-700 group-hover:translate-x-full" />
                 </button>
@@ -317,3 +380,4 @@ export default function ContactCTA() {
     </section>
   );
 }
+

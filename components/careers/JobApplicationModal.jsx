@@ -11,8 +11,13 @@ import {
   FileText,
 } from "lucide-react";
 
+const BASIN_ENDPOINT = "https://usebasin.com/f/56e8463b9e6c";
+
 export default function JobApplicationModal({ job, onClose }) {
   const [fileName, setFileName] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -24,15 +29,68 @@ export default function JobApplicationModal({ job, onClose }) {
 
   if (!job) return null;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Backend/email integration can be added later.
-    console.log("Application submitted for:", job.title);
+    setIsSubmitting(true);
+    setSubmitStatus("");
+    setErrorMessage("");
 
-    alert(
-      "Your application has been received. We will contact you if your profile is shortlisted."
-    );
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    // Add job information to the submission
+    formData.append("job_title", job.title || "");
+    formData.append("job_department", job.department || "");
+    formData.append("job_contract", job.contract || "");
+    formData.append("job_rotation", job.rotation || "");
+
+    try {
+      const response = await fetch(BASIN_ENDPOINT, {
+        method: "POST",
+        body: formData,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setSubmitStatus(
+          "Your application has been submitted successfully. We will contact you if your profile is shortlisted."
+        );
+
+        form.reset();
+        setFileName("");
+
+        // Automatically close after successful submission
+        setTimeout(() => {
+          onClose();
+        }, 3000);
+      } else {
+        let message =
+          "Something went wrong while submitting your application.";
+
+        try {
+          const data = await response.json();
+
+          if (data?.message) {
+            message = data.message;
+          }
+        } catch {
+          // Ignore JSON parsing errors
+        }
+
+        setErrorMessage(message);
+      }
+    } catch (error) {
+      console.error("Application submission error:", error);
+
+      setErrorMessage(
+        "Unable to submit your application. Please check your internet connection and try again."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -70,9 +128,7 @@ export default function JobApplicationModal({ job, onClose }) {
                       Salary
                     </p>
 
-                    <p className="mt-2 text-sm">
-                      {job.salary}
-                    </p>
+                    <p className="mt-2 text-sm">{job.salary}</p>
                   </div>
 
                   <div>
@@ -80,9 +136,7 @@ export default function JobApplicationModal({ job, onClose }) {
                       Contract
                     </p>
 
-                    <p className="mt-2 text-sm">
-                      {job.contract}
-                    </p>
+                    <p className="mt-2 text-sm">{job.contract}</p>
                   </div>
 
                   <div>
@@ -90,9 +144,7 @@ export default function JobApplicationModal({ job, onClose }) {
                       Rotation
                     </p>
 
-                    <p className="mt-2 text-sm">
-                      {job.rotation}
-                    </p>
+                    <p className="mt-2 text-sm">{job.rotation}</p>
                   </div>
 
                   <div>
@@ -100,9 +152,7 @@ export default function JobApplicationModal({ job, onClose }) {
                       Department
                     </p>
 
-                    <p className="mt-2 text-sm">
-                      {job.department}
-                    </p>
+                    <p className="mt-2 text-sm">{job.department}</p>
                   </div>
                 </div>
               </div>
@@ -136,6 +186,7 @@ export default function JobApplicationModal({ job, onClose }) {
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[#071923]/40">
                     Salary
                   </p>
+
                   <p className="mt-1 text-sm text-[#071923]">
                     {job.salary}
                   </p>
@@ -145,6 +196,7 @@ export default function JobApplicationModal({ job, onClose }) {
                   <p className="text-[10px] uppercase tracking-[0.2em] text-[#071923]/40">
                     Contract
                   </p>
+
                   <p className="mt-1 text-sm text-[#071923]">
                     {job.contract}
                   </p>
@@ -205,6 +257,7 @@ export default function JobApplicationModal({ job, onClose }) {
 
               <form
                 onSubmit={handleSubmit}
+                encType="multipart/form-data"
                 className="mt-8 space-y-5"
               >
                 {/* Name */}
@@ -253,7 +306,7 @@ export default function JobApplicationModal({ job, onClose }) {
                   </div>
                 </div>
 
-                {/* Phone */}
+                {/* Phone + Country */}
                 <div className="grid gap-5 md:grid-cols-2">
                   <div>
                     <label className="mb-2 block text-xs uppercase tracking-[0.15em] text-[#071923]/55">
@@ -272,7 +325,7 @@ export default function JobApplicationModal({ job, onClose }) {
                         name="phone"
                         required
                         placeholder="+91 00000 00000"
-                        className="w-full border border-[#071923]/15 bg-white px-11 py-3.5 text-sm outline-none transition focus:border-[#b99a63]"
+                        className="w-full border text-black border-[#071923]/15 bg-white px-11 py-3.5 text-sm outline-none transition focus:border-[#b99a63]"
                       />
                     </div>
                   </div>
@@ -294,7 +347,7 @@ export default function JobApplicationModal({ job, onClose }) {
                         name="country"
                         required
                         placeholder="Country"
-                        className="w-full border border-[#071923]/15 bg-white px-11 py-3.5 text-sm outline-none transition focus:border-[#b99a63]"
+                        className="w-full border text-black border-[#071923]/15 bg-white px-11 py-3.5 text-sm outline-none transition focus:border-[#b99a63]"
                       />
                     </div>
                   </div>
@@ -332,7 +385,7 @@ export default function JobApplicationModal({ job, onClose }) {
                     </div>
 
                     <div className="min-w-0">
-                      <p className="text-sm text-[#071923]">
+                      <p className="truncate text-sm text-[#071923]">
                         {fileName || "Choose your CV"}
                       </p>
 
@@ -356,7 +409,7 @@ export default function JobApplicationModal({ job, onClose }) {
                   </label>
                 </div>
 
-                {/* Cover message */}
+                {/* Message */}
                 <div>
                   <label className="mb-2 block text-xs uppercase tracking-[0.15em] text-[#071923]/55">
                     Message
@@ -366,16 +419,35 @@ export default function JobApplicationModal({ job, onClose }) {
                     name="message"
                     rows="4"
                     placeholder="Tell us briefly about yourself..."
-                    className="w-full resize-none border border-[#071923]/15 bg-white px-4 py-3.5 text-sm outline-none transition focus:border-[#b99a63]"
+                    className="w-full resize-none border border-[#071923]/15 text-black bg-white px-4 py-3.5 text-sm outline-none transition focus:border-[#b99a63]"
                   />
                 </div>
 
+                {/* Success message */}
+                {submitStatus && (
+                  <div className="border border-green-200 bg-green-50 px-4 py-4 text-sm leading-6 text-green-800">
+                    {submitStatus}
+                  </div>
+                )}
+
+                {/* Error message */}
+                {errorMessage && (
+                  <div className="border border-red-200 bg-red-50 px-4 py-4 text-sm leading-6 text-red-700">
+                    {errorMessage}
+                  </div>
+                )}
+
+                {/* Submit */}
                 <button
                   type="submit"
-                  className="flex w-full items-center justify-center gap-3 bg-[#071923] px-6 py-4 text-xs uppercase tracking-[0.25em] text-white transition hover:bg-[#b99a63]"
+                  disabled={isSubmitting}
+                  className="flex w-full items-center justify-center gap-3 bg-[#071923] px-6 py-4 text-xs uppercase tracking-[0.25em] text-white transition hover:bg-[#b99a63] disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   <FileText size={17} strokeWidth={1.2} />
-                  Submit Application
+
+                  {isSubmitting
+                    ? "Submitting Application..."
+                    : "Submit Application"}
                 </button>
 
                 <p className="text-center text-[11px] leading-5 text-[#071923]/40">
